@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  java-db:
+    image: postgres:14.5
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    networks:
+      - bulletin_network
+    ports:
+      - 5432:5432
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_PASSWORD=password
+      - PGADMIN_DEFAULT_EMAIL=post@gres.no
+    networks:
+      - bulletin_network
+    ports:
+      - 81:80
+  java-api:
+    build:
+      context: ./BulletinJavaApi
+    environment:
+      - DB_HOST=java-db
+    networks:
+      - bulletin_network
+    ports:
+      - 8080:8080
+  dotnet-api:
+    build:
+      context: ./BulletinDotnetApi
+      dockerfile: ./BulletinDotnetApi/Dockerfile
+    environment:
+      - JavaApiBaseUrl=http://java-api:8080
+    networks:
+      - bulletin_network
+    ports:
+      - 5232:80
+  frontend:
+    build:
+      context: ./BulletinFrontend/
+    environment:
+      # Denne vil kjøre fra nettleser som da er hostmanskin, skal derfor ikke være http://dotnet-api
+      - VITE_API_URL=http://localhost:5232
+    networks:
+      - bulletin_network
+    ports:
+      - 5173:5173
+
+networks:
+  bulletin_network:

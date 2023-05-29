@@ -19,9 +19,9 @@ docker image build -t frontenddemo .
 docker network create bulletin-network
 >> 149b39efad870152e87b27173dd2ef6f8c8605a61a8aa1107f226836cd28f749
 
-docker run -d --name javaapi -p 8080:8080 --env DB_HOST=java-db --network bulletin-network javademo
-docker run -d --name dotnetapi --env JavaApiBaseUrl=http://javaapi:8080 -p 5232:80 --network bulletin-network dotnetdemo
-docker run -d -p 5173:5173 --name frontenddemo --env VITE_API_URL=http://localhost:5232 --network bulletin-network frontenddemo
+docker run -d --name java-api -p 8080:8080 --env DB_HOST=java-db --network bulletin-network javademo
+docker run -d --name dotnet-api --env JavaApiBaseUrl=http://javaapi:8080 -p 5232:80 --network bulletin-network dotnetdemo
+docker run -d -p 5173:5173 --name frontend --env VITE_API_URL=http://localhost:5232 --network bulletin-network frontenddemo
 for fronend så må man faktisk bruke http://localhost:5232 fordi kallene gjøres fra docker hostmaskinens nettleser, ikke fra internt i docker-containeren
 
 ```
