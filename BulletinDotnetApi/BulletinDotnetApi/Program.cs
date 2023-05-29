@@ -15,6 +15,10 @@ builder.Services.AddHttpClient<IJavaBackendBulletinBoardApiClient, JavaBackendBu
     {
         client.BaseAddress = new Uri(provider.GetService<IConfiguration>()!.GetValue<string>("JavaApiBaseUrl") ?? "ohno");
     });
+builder.Services.AddHttpClient<IAzureFunctionApiClient, AzureFunctionApiClient>((provider, client) =>
+{
+    client.BaseAddress = new Uri(provider.GetService<IConfiguration>()!.GetValue<string>("AzureFunctionApiBasePath")!);
+});
 
 // Kun lagt til for debugging av autentisteringsfeil. Viste seg å være en følge av at Zscaler var påslått...
 IdentityModelEventSource.ShowPII = true;

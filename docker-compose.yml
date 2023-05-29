@@ -33,6 +33,8 @@ services:
       dockerfile: ./BulletinDotnetApi/Dockerfile
     environment:
       - JavaApiBaseUrl=http://java-api:8080
+      - AzureFunctionName=CleanMessage
+      - AzureFunctionApiBasePath=http://az-func
     networks:
       - bulletin_network
     ports:
