@@ -1,32 +1,32 @@
 package com.example.bulletin.dto;
 
 public class BulletinBoardMessageGetDto {
-    private int id;
-    private int posterId;
+    private long id;
+    private long posterId;
     private String message;
 
     public BulletinBoardMessageGetDto() {
     }
 
-    public BulletinBoardMessageGetDto(int id, int posterId, String message) {
+    public BulletinBoardMessageGetDto(long id, long posterId, String message) {
         this.id = id;
         this.posterId = posterId;
         this.message = message;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getPosterId() {
+    public long getPosterId() {
         return posterId;
     }
 
-    public void setPosterId(int posterId) {
+    public void setPosterId(long posterId) {
         this.posterId = posterId;
     }
 

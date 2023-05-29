@@ -2,27 +2,30 @@ package com.example.bulletin.controllers;
 
 import com.example.bulletin.dto.BulletinBoardMessageGetDto;
 import com.example.bulletin.dto.BulletinBoardMessagePostDto;
+import com.example.bulletin.models.BulletinBoardMessage;
+import com.example.bulletin.repositories.BulletinBoardMessageRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("bulletinboardmessages")
 public class BulletinBoardMessageController {
 
-    private List<BulletinBoardMessageGetDto> messages = new ArrayList<>();
+    private final BulletinBoardMessageRepository repository;
+
+    public BulletinBoardMessageController(BulletinBoardMessageRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping
     public Collection<BulletinBoardMessageGetDto> GetBulletinBoardMessages() {
-        return messages;
+        return repository.findAll().stream().map(it -> new BulletinBoardMessageGetDto(it.getId(), it.getPosterId(), it.getMessage())).toList();
     }
 
     @PostMapping
     public BulletinBoardMessageGetDto PostBulletinBoardMessage(@RequestBody BulletinBoardMessagePostDto message) {
-        var messageAsGetDtos = new BulletinBoardMessageGetDto(messages.size() + 1, message.getPosterId(), message.getMessage());
-        this.messages.add(messageAsGetDtos);
-        return messageAsGetDtos;
+        var savedMessage = repository.save(new BulletinBoardMessage(message.getPosterId(), message.getMessage()));
+        return new BulletinBoardMessageGetDto(savedMessage.getId(), savedMessage.getPosterId(), savedMessage.getMessage());
     }
 }

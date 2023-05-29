@@ -1,11 +1,27 @@
 package com.example.bulletin.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class BulletinBoardMessage {
-    private int id;
-    private int posterId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    private long posterId;
     private String message;
 
-    public int getId() {
+    public BulletinBoardMessage() {
+    }
+
+    public BulletinBoardMessage(long posterId, String message) {
+        this.posterId = posterId;
+        this.message = message;
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -13,11 +29,11 @@ public class BulletinBoardMessage {
         this.id = id;
     }
 
-    public int getPosterId() {
+    public long getPosterId() {
         return posterId;
     }
 
-    public void setPosterId(int posterId) {
+    public void setPosterId(long posterId) {
         this.posterId = posterId;
     }
 

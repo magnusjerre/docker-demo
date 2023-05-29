@@ -44,10 +44,4 @@ public class BulletinBoardController : ControllerBase
                 Message = response.Message
             };
     }
-
-    [HttpGet("yo")]
-    public async Task<string> GetString()
-    {
-        return "yo yo";
-    }
 }
