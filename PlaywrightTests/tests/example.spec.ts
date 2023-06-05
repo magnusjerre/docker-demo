@@ -8,6 +8,8 @@ test('should login, create a message and show the created message', async ({ pag
   const loginButton = page.getByText(/log in/i);
 
   await loginButton.click();
+  await expect(page.getByRole('listitem').first()).toBeVisible();
+  const initialCount = await page.getByRole('listitem').count();
   const emailField = page.getByPlaceholder('yours@example.com');
   const passwordField = page.getByPlaceholder('your password');
   await emailField.fill(username);
@@ -21,5 +23,5 @@ test('should login, create a message and show the created message', async ({ pag
   await messageField.press('Enter');
   
   const newMessage = page.getByText(/Melding som skal renses - .*/);
-  await expect(newMessage).toHaveCount(1);
+  await expect(newMessage).toBeVisible();
 });
