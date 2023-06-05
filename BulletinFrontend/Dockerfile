@@ -1,13 +1,22 @@
-
-# https://github.com/nodejs/docker-node/blob/main/README.md#how-to-use-this-image
-# WORKDIR /usr/src/app
-FROM node
-WORKDIR /usr/src/app
-COPY package.json .
-RUN npm install
+FROM node:alpine as build-stage
+RUN mkdir /myapp 
+WORKDIR /myapp
 COPY . .
-RUN npm run build
+RUN ["npm", "install"]
+RUN ["npm", "run", "build"]
 
-# 5173 for run build
-EXPOSE 5173
-CMD ["npm", "run", "host"]
+# Følgende to bygg-stadier vil gjøre at fremtidige bygg, der avhengigheter i package.json er uendret blir raskere.
+# FROM node:alpine as node_modules_base
+# RUN mkdir /myapp
+# WORKDIR /myapp
+# COPY ./package.json .
+# RUN ["npm", "install"]
+
+# FROM node_modules_base as build-stage
+# # samme som for node_modules_base
+# WORKDIR /myapp
+# COPY . .
+# RUN ["npm", "run", "build"]
+
+FROM nginx:alpine
+COPY --from=build-stage /myapp/dist /usr/share/nginx/html

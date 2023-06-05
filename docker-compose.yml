@@ -9,15 +9,16 @@ services:
       - bulletin_network
     ports:
       - 5432:5432
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_PASSWORD=password
-      - PGADMIN_DEFAULT_EMAIL=post@gres.no
-    networks:
-      - bulletin_network
-    ports:
-      - 81:80
+  # Kjøre opp pgadmin i docker om man vil 
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     - PGADMIN_DEFAULT_PASSWORD=password
+  #     - PGADMIN_DEFAULT_EMAIL=post@gres.no
+  #   networks:
+  #     - bulletin_network
+  #   ports:
+  #     - 81:80
   java-api:
     build:
       context: ./BulletinJavaApi
@@ -48,7 +49,7 @@ services:
     networks:
       - bulletin_network
     ports:
-      - 5173:5173
+      - 5173:80
   az-func:
     build:
       context: ./AzureFunction

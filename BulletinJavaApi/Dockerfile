@@ -8,5 +8,5 @@ RUN gradle bootJar --no-daemon
 FROM eclipse-temurin:17 as run-stage
 RUN mkdir /opt/app
 COPY --from=build-stage /home/gradle/project/build/libs/ /opt/app
+EXPOSE 8080
 CMD ["java", "-jar", "/opt/app/bulletin-0.0.1-SNAPSHOT.jar"]
-

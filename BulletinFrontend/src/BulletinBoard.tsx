@@ -16,7 +16,7 @@ const BulletinBoard = () => {
 
     const fetchMessages = () => {
         const url = import.meta.env.VITE_API_URL + "/bulletinboard";
-        console.log("url to fetch from", url);
+        // console.log("url to fetch from", url);
         fetch(url, {
             mode: 'cors',
             headers: {
