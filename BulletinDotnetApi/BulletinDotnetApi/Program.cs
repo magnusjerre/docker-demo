@@ -29,6 +29,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
+    options.RequireHttpsMetadata = false;
     options.Authority = "https://dev-9uq4yxs3.eu.auth0.com/";
     options.Audience = "https://bulletinapi.no.no";
 });

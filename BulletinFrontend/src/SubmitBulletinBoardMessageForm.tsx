@@ -6,25 +6,25 @@ export interface ISubmit {
     onAddMessage: (message: IBulletinBoardMessage) => void;
 }
 
-const SubmitBulletinBoardMessageForm = ({onAddMessage}: ISubmit) => {
-    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+const SubmitBulletinBoardMessageForm = ({ onAddMessage }: ISubmit) => {
+    const { getAccessTokenSilently } = useAuth0();
     const [myAccessToken, setMyAccessToken] = useState("");
     const [message, setMessage] = useState("");
+    const [isFetching, setIsFetching] = useState(false);
 
     useEffect(() => {
         const fetchToken = async () => {
             return await getAccessTokenSilently();
-        }
+        };
         fetchToken().then(token => {
             setMyAccessToken(token);
-            console.log("token", token);
         });
     }, [0]);
 
     const onHandleSubmit = (e: any) => {
         e.preventDefault();
+        setIsFetching(true);
         const url = import.meta.env.VITE_API_URL + "/bulletinboard";
-        console.log("url to post to", url);
         fetch(url, {
             body: `message=${encodeURIComponent(message)}`,
             headers: {
@@ -33,17 +33,16 @@ const SubmitBulletinBoardMessageForm = ({onAddMessage}: ISubmit) => {
             },
             mode: 'cors',
             method: 'POST'
-        }).then((r) => {
-            console.log('status code', r.status);
-            setMessage("");
-            return r.json();
-        }).then(json => {
-             console.log("response json", json);
-             onAddMessage(json);
-        })
-        .catch(e => {
-            console.log("oh no, exception", e);
-        });
+        }).then((r) => r.json())
+            .then(json => {
+                setMessage("");
+                onAddMessage(json);
+                setIsFetching(false);
+            })
+            .catch(e => {
+                console.log("oh no, exception", e);
+                setIsFetching(false);
+            });
     };
 
     return (
@@ -52,7 +51,7 @@ const SubmitBulletinBoardMessageForm = ({onAddMessage}: ISubmit) => {
                 Melding:
                 <input type="text" value={message} onChange={(ev) => setMessage(ev.target.value)}></input>
             </label>
-            <input type="submit" value="Send"/>
+            <input type="submit" value="Send" disabled={isFetching} />
         </form>
     );
 }

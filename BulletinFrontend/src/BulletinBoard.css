@@ -1,5 +1,6 @@
 .bulletinboard {
-    
+    width: 20em;
+    padding-inline-start: 0;
 }
 
 ul.bulletinboard > li {
@@ -7,6 +8,11 @@ ul.bulletinboard > li {
     border: lightblue 2px solid;
     border-radius: 0.5em;
     padding-left: 1em;
+    padding-right: 1em;
     margin-bottom: 0.5em;
     list-style-type: none;
+}
+
+.bulletinboard-wrapper {
+    margin-top: 2em;
 }
