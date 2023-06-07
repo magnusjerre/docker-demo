@@ -35,7 +35,7 @@ public class Function {
 
         if (body.isEmpty()) return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Must contain a message body").build();
 
-        // Trim spaces, capitalize firt letter, remove trailing dot
+        // Trim spaces, capitalize first letter, remove trailing dot
         var cleanedMessage = body.get().trim();
         cleanedMessage = cleanedMessage.substring(0, 1).toUpperCase() + cleanedMessage.substring(1);
         if (cleanedMessage.endsWith(".")) {
