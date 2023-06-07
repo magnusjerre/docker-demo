@@ -1,12 +1,12 @@
 version: "3.9"
 services:
-  java-db:
+  postgres-db:
     image: postgres:14.5
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
     networks:
-      - bulletin_network
+      - bnet
     ports:
       - 5432:5432
   # Kjøre opp pgadmin i docker om man vil 
@@ -16,16 +16,16 @@ services:
   #     - PGADMIN_DEFAULT_PASSWORD=password
   #     - PGADMIN_DEFAULT_EMAIL=post@gres.no
   #   networks:
-  #     - bulletin_network
+  #     - bnet
   #   ports:
   #     - 81:80
   java-api:
     build:
       context: ./BulletinJavaApi
     environment:
-      - DB_HOST=java-db
+      - DB_HOST=postgres-db
     networks:
-      - bulletin_network
+      - bnet
     ports:
       - 8080:8080
   dotnet-api:
@@ -37,7 +37,7 @@ services:
       - AzureFunctionName=CleanMessage
       - AzureFunctionApiBasePath=http://az-func
     networks:
-      - bulletin_network
+      - bnet
     ports:
       - 5232:80
   frontend:
@@ -47,16 +47,16 @@ services:
       # Denne vil kjøre fra nettleser som da er hostmanskin, skal derfor ikke være http://dotnet-api
       - VITE_API_URL=http://localhost:5232
     networks:
-      - bulletin_network
+      - bnet
     ports:
       - 5173:80
   az-func:
     build:
       context: ./AzureFunction
     networks:
-      - bulletin_network
+      - bnet
     ports:
       - 82:80
 
 networks:
-  bulletin_network:
+  bnet:

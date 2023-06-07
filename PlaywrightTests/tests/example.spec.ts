@@ -14,7 +14,7 @@ test('should login, create a message and show the created message', async ({ pag
   await messageField.press('Enter');
   
 
-  const newMessage = page.getByText(/Stygg -> pen melding - .*/);
+  const newMessage = page.getByText(/Stygg -> pen melding/);
   await expect(newMessage).toHaveCount(1);
 });
 
