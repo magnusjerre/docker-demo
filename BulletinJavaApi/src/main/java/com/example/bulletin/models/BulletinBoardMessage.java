@@ -10,13 +10,13 @@ public class BulletinBoardMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private long posterId;
+    private String posterId;
     private String message;
 
     public BulletinBoardMessage() {
     }
 
-    public BulletinBoardMessage(long posterId, String message) {
+    public BulletinBoardMessage(String posterId, String message) {
         this.posterId = posterId;
         this.message = message;
     }
@@ -29,11 +29,11 @@ public class BulletinBoardMessage {
         this.id = id;
     }
 
-    public long getPosterId() {
+    public String getPosterId() {
         return posterId;
     }
 
-    public void setPosterId(long posterId) {
+    public void setPosterId(String posterId) {
         this.posterId = posterId;
     }
 

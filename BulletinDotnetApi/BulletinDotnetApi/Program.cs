@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHttpClient<IJavaBackendBulletinBoardApiClient, JavaBackendBulletinBoardApiClient>(
+builder.Services.AddHttpClient<IJavaBackendApiClient, JavaBackendApiClient>(
     (provider, client) =>
     {
         client.BaseAddress = new Uri(provider.GetService<IConfiguration>()!.GetValue<string>("JavaApiBaseUrl") ?? "ohno");
@@ -29,6 +29,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
+    // RequireHttpsMetadata kreves for at docker-containeren skal klare å gjøre https-kall mot auth0.
+    // Ved kjøring lokalt trengs ikke denne configendringen.
     options.RequireHttpsMetadata = false;
     options.Authority = "https://dev-9uq4yxs3.eu.auth0.com/";
     options.Audience = "https://bulletinapi.no.no";
@@ -53,6 +55,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("CorsAllowAny");
+
+// Slår av https redirection for at ting skal fungere fint med docker
 // app.UseHttpsRedirection();
 
 app.UseAuthorization();

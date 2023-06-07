@@ -5,7 +5,7 @@ import SubmitBulletinBoardMessageForm from "./SubmitBulletinBoardMessageForm";
 
 export interface IBulletinBoardMessage {
     id: number;
-    posterId: number;
+    posterId: string;
     message: string;
 }
 

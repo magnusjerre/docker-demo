@@ -1,14 +1,14 @@
 package com.example.bulletin.dto;
 
 public class BulletinBoardMessagePostDto {
-    private int posterId;
+    private String posterId;
     private String message;
 
-    public int getPosterId() {
+    public String getPosterId() {
         return posterId;
     }
 
-    public void setPosterId(int posterId) {
+    public void setPosterId(String posterId) {
         this.posterId = posterId;
     }
 

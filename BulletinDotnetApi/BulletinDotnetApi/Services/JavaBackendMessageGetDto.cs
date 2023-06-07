@@ -1,8 +1,8 @@
 ﻿namespace BulletinDotnetApi.Services;
 
-public class JavaBackendBulletinBoardMessageGetDto
+public class JavaBackendMessageGetDto
 {
     public int Id { get; set; }
-    public int PosterId { get; set; }
+    public string PosterId { get; set; }
     public string Message { get; set; }
 }

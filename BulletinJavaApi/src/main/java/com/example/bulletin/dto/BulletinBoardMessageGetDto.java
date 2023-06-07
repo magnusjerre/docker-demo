@@ -2,13 +2,13 @@ package com.example.bulletin.dto;
 
 public class BulletinBoardMessageGetDto {
     private long id;
-    private long posterId;
+    private String posterId;
     private String message;
 
     public BulletinBoardMessageGetDto() {
     }
 
-    public BulletinBoardMessageGetDto(long id, long posterId, String message) {
+    public BulletinBoardMessageGetDto(long id, String posterId, String message) {
         this.id = id;
         this.posterId = posterId;
         this.message = message;
@@ -22,11 +22,11 @@ public class BulletinBoardMessageGetDto {
         this.id = id;
     }
 
-    public long getPosterId() {
+    public String getPosterId() {
         return posterId;
     }
 
-    public void setPosterId(long posterId) {
+    public void setPosterId(String posterId) {
         this.posterId = posterId;
     }
 
